@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions: {}
+
+jobs:
+  check:
+    name: Lint + typecheck + test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [20, 22]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Lint + typecheck
+        run: pnpm run check
+
+      - name: Tests
+        run: pnpm run test
+
+      - name: Build
+        run: pnpm run build
+
+      - name: Verify dist artifacts
+        run: |
+          test -f dist/index.js  || (echo "::error::missing dist/index.js (ESM)" && exit 1)
+          test -f dist/index.cjs || (echo "::error::missing dist/index.cjs (CJS)" && exit 1)
+          test -f dist/index.d.ts  || (echo "::error::missing dist/index.d.ts (ESM types)" && exit 1)
+          test -f dist/index.d.cts || (echo "::error::missing dist/index.d.cts (CJS types)" && exit 1)

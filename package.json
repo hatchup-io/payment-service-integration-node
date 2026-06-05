@@ -1,0 +1,67 @@
+{
+  "name": "@hatchup-io/payment-service-integration",
+  "version": "0.1.0",
+  "description": "TypeScript SDK for the Hatchup Payment Service — an internal Stripe Connect gateway.",
+  "license": "MIT",
+  "author": "Hatchup",
+  "homepage": "https://github.com/hatchup-io/payment-service-integration-node",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hatchup-io/payment-service-integration-node.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hatchup-io/payment-service-integration-node/issues"
+  },
+  "keywords": ["hatchup", "payments", "stripe", "sdk", "typescript", "psip"],
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": ["dist", "README.md", "LICENSE", "CHANGELOG.md"],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lint": "biome check .",
+    "format": "biome format --write .",
+    "check": "biome check . && tsc --noEmit",
+    "prepublishOnly": "pnpm run check && pnpm run test && pnpm run build"
+  },
+  "dependencies": {
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.0",
+    "@types/node": "^20.0.0",
+    "@vitest/coverage-v8": "^2.1.0",
+    "msw": "^2.4.0",
+    "tsup": "^8.3.0",
+    "typescript": "^5.5.0",
+    "vitest": "^2.1.0"
+  },
+  "packageManager": "pnpm@10.33.2",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": ["@biomejs/biome", "esbuild", "msw"]
+  }
+}
