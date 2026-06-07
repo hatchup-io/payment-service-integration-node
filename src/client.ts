@@ -13,10 +13,15 @@
 import { PSIPConfigSchema } from "./config.js";
 import type { PSIPConfig, PSIPConfigInput } from "./config.js";
 import type { VerifyInput, VerifyResponse } from "./models/verify.js";
+import { PricesResource, ProductsResource } from "./resources/catalog.js";
 import { CustomersResource } from "./resources/customers.js";
+import { PaymentIntentsResource } from "./resources/payment_intents.js";
 import { PaymentsResource } from "./resources/payments.js";
+import { PaymentMethodsResource, SetupIntentsResource } from "./resources/setup_intents.js";
+import { SubscriptionsResource } from "./resources/subscriptions.js";
 import { TransactionsResource } from "./resources/transactions.js";
 import { VerifyResource } from "./resources/verify.js";
+import { WebhookEndpointsResource } from "./resources/webhook_endpoints.js";
 import { Transport } from "./transport.js";
 
 function isParsedConfig(value: PSIPConfig | PSIPConfigInput): value is PSIPConfig {
@@ -36,8 +41,16 @@ export class PaymentServiceClient {
   readonly payments: PaymentsResource;
   readonly transactions: TransactionsResource;
   readonly customers: CustomersResource;
+  readonly products: ProductsResource;
+  readonly prices: PricesResource;
+  readonly paymentIntents: PaymentIntentsResource;
+  readonly setupIntents: SetupIntentsResource;
+  readonly paymentMethods: PaymentMethodsResource;
+  readonly subscriptions: SubscriptionsResource;
+  readonly webhookEndpoints: WebhookEndpointsResource;
 
-  /** Internal — exposed for parity with the Python SDK's `client.webhooks`. */
+  /** Internal — `client.verify(orderId, price)` is exposed as a method on the
+   *  class, mirroring the Python SDK's `__call__` reading. */
   readonly #verifyResource: VerifyResource;
 
   /**
@@ -51,6 +64,13 @@ export class PaymentServiceClient {
     this.payments = new PaymentsResource(this.transport);
     this.transactions = new TransactionsResource(this.transport);
     this.customers = new CustomersResource(this.transport);
+    this.products = new ProductsResource(this.transport);
+    this.prices = new PricesResource(this.transport);
+    this.paymentIntents = new PaymentIntentsResource(this.transport);
+    this.setupIntents = new SetupIntentsResource(this.transport);
+    this.paymentMethods = new PaymentMethodsResource(this.transport);
+    this.subscriptions = new SubscriptionsResource(this.transport);
+    this.webhookEndpoints = new WebhookEndpointsResource(this.transport);
     this.#verifyResource = new VerifyResource(this.transport);
   }
 

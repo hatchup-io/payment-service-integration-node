@@ -1,11 +1,8 @@
 /**
  * Public entry for `@hatchup-io/payment-service-integration`.
  *
- * M1.b.1 — config + exceptions + transport + the core checkout+lookup
- * resource surface (payments, verify, transactions, customers) + the
- * `PaymentServiceClient` facade. Catalog / paymentIntents / setupIntents /
- * subscriptions / webhookEndpoints land in M1.b.2; webhook parser +
- * dispatcher in M1.c.
+ * M1.b.2 — full 11-resource parity matrix is now in place. Webhook
+ * parsing + dispatcher land in M1.c.
  */
 
 export { VERSION } from "./_version.js";
@@ -48,6 +45,11 @@ export { PaymentsResource } from "./resources/payments.js";
 export { VerifyResource } from "./resources/verify.js";
 export { TransactionsResource } from "./resources/transactions.js";
 export { CustomersResource } from "./resources/customers.js";
+export { ProductsResource, PricesResource } from "./resources/catalog.js";
+export { PaymentIntentsResource } from "./resources/payment_intents.js";
+export { SetupIntentsResource, PaymentMethodsResource } from "./resources/setup_intents.js";
+export { SubscriptionsResource } from "./resources/subscriptions.js";
+export { WebhookEndpointsResource } from "./resources/webhook_endpoints.js";
 
 // Models — envelope + payment + verify + transaction + customer
 export { ApiEnvelopeSchema, ApiEnvelopeStatusSchema } from "./models/envelope.js";
@@ -112,3 +114,119 @@ export type {
   PaymentMethodCard,
   PaymentMethodList,
 } from "./models/customer.js";
+
+export {
+  PricePageSchema,
+  PriceSchema,
+  ProductPageSchema,
+  ProductSchema,
+  RecurringIntervalSchema,
+  RecurringPriceSchema,
+  toPriceCreateWireBody,
+  toPriceListQuery,
+  toProductCreateWireBody,
+  toProductListQuery,
+  toProductUpdateWireBody,
+} from "./models/catalog.js";
+export type {
+  Price,
+  PriceCreateInput,
+  PriceListInput,
+  PricePage,
+  Product,
+  ProductCreateInput,
+  ProductListInput,
+  ProductPage,
+  ProductUpdateInput,
+  RecurringInterval,
+  RecurringPrice,
+} from "./models/catalog.js";
+
+export {
+  CaptureMethodSchema,
+  PaymentIntentCancellationReasonSchema,
+  PaymentIntentPageSchema,
+  PaymentIntentSchema,
+  PaymentIntentStatusSchema,
+  PaymentMethodDetailsSchema,
+  toPaymentIntentCancelWireBody,
+  toPaymentIntentCaptureWireBody,
+  toPaymentIntentConfirmWireBody,
+  toPaymentIntentCreateWireBody,
+  toPaymentIntentListQuery,
+} from "./models/payment_intent.js";
+export type {
+  CaptureMethod,
+  PaymentIntent,
+  PaymentIntentCancelInput,
+  PaymentIntentCancellationReason,
+  PaymentIntentCaptureInput,
+  PaymentIntentConfirmInput,
+  PaymentIntentCreateInput,
+  PaymentIntentListInput,
+  PaymentIntentPage,
+  PaymentIntentStatus,
+  PaymentMethodDetails,
+} from "./models/payment_intent.js";
+
+export {
+  DetachedPaymentMethodSchema,
+  SetupIntentPageSchema,
+  SetupIntentSchema,
+  SetupIntentStatusSchema,
+  SetupIntentUsageSchema,
+  toSetupIntentConfirmWireBody,
+  toSetupIntentCreateWireBody,
+  toSetupIntentListQuery,
+} from "./models/setup_intent.js";
+export type {
+  DetachedPaymentMethod,
+  SetupIntent,
+  SetupIntentConfirmInput,
+  SetupIntentCreateInput,
+  SetupIntentListInput,
+  SetupIntentPage,
+  SetupIntentStatus,
+  SetupIntentUsage,
+} from "./models/setup_intent.js";
+
+export {
+  ProrationBehaviorSchema,
+  SubscriptionCancellationReasonSchema,
+  SubscriptionItemSnapshotSchema,
+  SubscriptionPageSchema,
+  SubscriptionSchema,
+  SubscriptionStatusSchema,
+  toSubscriptionCancelWireBody,
+  toSubscriptionCreateWireBody,
+  toSubscriptionListQuery,
+  toSubscriptionUpdateWireBody,
+} from "./models/subscription.js";
+export type {
+  ProrationBehavior,
+  Subscription,
+  SubscriptionCancelInput,
+  SubscriptionCancellationReason,
+  SubscriptionCreateInput,
+  SubscriptionItemInput,
+  SubscriptionItemSnapshot,
+  SubscriptionListInput,
+  SubscriptionPage,
+  SubscriptionStatus,
+  SubscriptionUpdateInput,
+} from "./models/subscription.js";
+
+export {
+  WebhookEndpointPageSchema,
+  WebhookEndpointSchema,
+  toWebhookEndpointCreateWireBody,
+  toWebhookEndpointListQuery,
+  toWebhookEndpointUpdateWireBody,
+} from "./models/webhook_endpoint.js";
+export type {
+  WebhookEndpoint,
+  WebhookEndpointCreateInput,
+  WebhookEndpointListInput,
+  WebhookEndpointPage,
+  WebhookEndpointUpdateInput,
+} from "./models/webhook_endpoint.js";
