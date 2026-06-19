@@ -15,7 +15,7 @@ permissions: {}
 jobs:
   check:
     name: Lint + typecheck + test
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     permissions:
       contents: read
     strategy:
