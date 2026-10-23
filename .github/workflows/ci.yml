@@ -15,7 +15,10 @@ permissions: {}
 jobs:
   check:
     name: Lint + typecheck + test
-    runs-on: ubuntu-latest
+    # Never run a fork's pull request on our own runner: that is arbitrary code
+    # on our machine.
+    if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: self-hosted
     permissions:
       contents: read
     strategy:
@@ -25,9 +28,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: pnpm/action-setup@v4
+      # Node bare, then pnpm, then Node again for the cache: the self-hosted
+      # runner has no Node of its own, pnpm/action-setup@v6 needs one, and
+      # setup-node's `cache: pnpm` needs pnpm.
+      - uses: actions/setup-node@v7
+        with:
+          node-version: ${{ matrix.node-version }}
 
-      - uses: actions/setup-node@v4
+      # Into the job's temp dir: the runners on a host share one home, and
+      # concurrent jobs clobber the default ~/setup-pnpm.
+      - uses: pnpm/action-setup@v6
+        with:
+          dest: ${{ runner.temp }}/setup-pnpm
+
+      - uses: actions/setup-node@v7
         with:
           node-version: ${{ matrix.node-version }}
           cache: pnpm
