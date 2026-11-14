@@ -6,9 +6,9 @@
  * reading `await client.verify(orderId, price)` works directly.
  */
 
-import { VerifyResponseSchema, toVerifyWireBody } from "../models/verify.js";
 import type { VerifyInput, VerifyResponse } from "../models/verify.js";
-import { Resource, parseResponse } from "./_base.js";
+import { toVerifyWireBody, VerifyResponseSchema } from "../models/verify.js";
+import { parseResponse, Resource } from "./_base.js";
 
 export class VerifyResource extends Resource {
   /**

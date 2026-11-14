@@ -50,15 +50,15 @@ API keys must start with `hp_`. The default base URL is `https://payments.hatchu
 
 ## Status
 
-| Milestone | Version | Status |
-|---|---|---|
-| M0 — toolchain bootstrap | 0.1.0 | done |
-| M1.a/M1.b — transport, client, all REST resources | 0.1.0 (unreleased) | done |
-| M1.c — webhook parsing + dispatcher | 0.2.0 | pending |
-| M2 — contract tripwire | 0.3.0 | planned |
-| M3 — production-hardened release pipeline | 0.4.0 | planned |
-| M4 — framework adapter (Express) | 0.5.0 | planned |
-| 1.0.0 — stabilize after first Node consumer | 1.0.0 | planned |
+| Milestone                                         | Version            | Status  |
+| ------------------------------------------------- | ------------------ | ------- |
+| M0 — toolchain bootstrap                          | 0.1.0              | done    |
+| M1.a/M1.b — transport, client, all REST resources | 0.1.0 (unreleased) | done    |
+| M1.c — webhook parsing + dispatcher               | 0.2.0              | pending |
+| M2 — contract tripwire                            | 0.3.0              | planned |
+| M3 — production-hardened release pipeline         | 0.4.0              | planned |
+| M4 — framework adapter (Express)                  | 0.5.0              | planned |
+| 1.0.0 — stabilize after first Node consumer       | 1.0.0              | planned |
 
 See the [Node SDK plan](https://github.com/hatchup-io/payment-service-integration/blob/main/docs/NODE_SDK_PLAN.md).
 

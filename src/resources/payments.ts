@@ -20,7 +20,7 @@ import {
   toRefundWireBody,
   toRepaymentWireBody,
 } from "../models/payment.js";
-import { Resource, parseResponse } from "./_base.js";
+import { parseResponse, Resource } from "./_base.js";
 
 export class PaymentsResource extends Resource {
   /**

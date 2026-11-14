@@ -1,11 +1,11 @@
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { VERSION } from "../../src/_version.js";
 import {
+  configFromEnv,
   DEFAULT_BASE_URL,
   ENV_PREFIX_DEFAULT,
   PSIPConfigSchema,
   RetryPolicySchema,
-  configFromEnv,
 } from "../../src/config.js";
 
 describe("PSIPConfigSchema", () => {
@@ -151,7 +151,6 @@ describe("configFromEnv", () => {
       // process.env requires `delete` to actually unset; assignment to
       // undefined would coerce to the string "undefined" and pollute the
       // env for subsequent tests.
-      // biome-ignore lint/performance/noDelete: process.env semantics
       delete process.env.MYAPP_API_KEY;
     }
   });

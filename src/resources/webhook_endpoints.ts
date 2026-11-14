@@ -13,13 +13,13 @@ import type {
   WebhookEndpointUpdateInput,
 } from "../models/webhook_endpoint.js";
 import {
-  WebhookEndpointPageSchema,
-  WebhookEndpointSchema,
   toWebhookEndpointCreateWireBody,
   toWebhookEndpointListQuery,
   toWebhookEndpointUpdateWireBody,
+  WebhookEndpointPageSchema,
+  WebhookEndpointSchema,
 } from "../models/webhook_endpoint.js";
-import { Resource, parseResponse } from "./_base.js";
+import { parseResponse, Resource } from "./_base.js";
 
 export class WebhookEndpointsResource extends Resource {
   async create(input: WebhookEndpointCreateInput): Promise<WebhookEndpoint> {
