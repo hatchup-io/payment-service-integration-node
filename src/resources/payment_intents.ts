@@ -20,7 +20,7 @@ import {
   toPaymentIntentCreateWireBody,
   toPaymentIntentListQuery,
 } from "../models/payment_intent.js";
-import { Resource, parseResponse } from "./_base.js";
+import { parseResponse, Resource } from "./_base.js";
 
 export class PaymentIntentsResource extends Resource {
   async create(input: PaymentIntentCreateInput): Promise<PaymentIntent> {

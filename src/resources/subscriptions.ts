@@ -18,7 +18,7 @@ import {
   toSubscriptionListQuery,
   toSubscriptionUpdateWireBody,
 } from "../models/subscription.js";
-import { Resource, parseResponse } from "./_base.js";
+import { parseResponse, Resource } from "./_base.js";
 
 export class SubscriptionsResource extends Resource {
   async create(input: SubscriptionCreateInput): Promise<Subscription> {

@@ -1,0 +1,35 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    target-branch: "main"
+    schedule:
+      interval: "weekly"
+    groups:
+      npm-minor-patch:
+        update-types: ["minor", "patch"]
+    ignore:
+      # CI still tests on Node 20 (engines: >=20); these majors need Node 22+.
+      - dependency-name: "vitest"
+        versions: [">=5"]
+      - dependency-name: "@vitest/coverage-v8"
+        versions: [">=5"]
+      - dependency-name: "msw"
+        versions: [">=3"]
+      - dependency-name: "tsup"
+        versions: [">=9"]
+      # Types track the oldest supported Node.
+      - dependency-name: "@types/node"
+        versions: [">=21"]
+      # zod schemas are part of the SDK's public API; v4 changes their types
+      # and validation, so it needs its own SDK release.
+      - dependency-name: "zod"
+        versions: [">=4"]
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    target-branch: "main"
+    schedule:
+      interval: "weekly"
+    groups:
+      actions-minor-patch:
+        update-types: ["minor", "patch"]

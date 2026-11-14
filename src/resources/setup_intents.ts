@@ -18,7 +18,7 @@ import {
   toSetupIntentCreateWireBody,
   toSetupIntentListQuery,
 } from "../models/setup_intent.js";
-import { Resource, parseResponse } from "./_base.js";
+import { parseResponse, Resource } from "./_base.js";
 
 export class SetupIntentsResource extends Resource {
   async create(input: SetupIntentCreateInput = {}): Promise<SetupIntent> {

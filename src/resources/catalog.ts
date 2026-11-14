@@ -24,7 +24,7 @@ import {
   toProductListQuery,
   toProductUpdateWireBody,
 } from "../models/catalog.js";
-import { Resource, parseResponse } from "./_base.js";
+import { parseResponse, Resource } from "./_base.js";
 
 export class ProductsResource extends Resource {
   async create(input: ProductCreateInput): Promise<Product> {

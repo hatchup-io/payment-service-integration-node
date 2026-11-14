@@ -22,7 +22,7 @@ import {
   toCustomerPortalSessionWireBody,
   toCustomerUpdateWireBody,
 } from "../models/customer.js";
-import { Resource, parseResponse } from "./_base.js";
+import { parseResponse, Resource } from "./_base.js";
 
 export class CustomersResource extends Resource {
   /**

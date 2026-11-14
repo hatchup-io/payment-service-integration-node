@@ -10,8 +10,8 @@
  * mirrors the Python SDK's `client.verify(order_id, price)` (`__call__`).
  */
 
-import { PSIPConfigSchema } from "./config.js";
 import type { PSIPConfig, PSIPConfigInput } from "./config.js";
+import { PSIPConfigSchema } from "./config.js";
 import type { VerifyInput, VerifyResponse } from "./models/verify.js";
 import { PricesResource, ProductsResource } from "./resources/catalog.js";
 import { CustomersResource } from "./resources/customers.js";

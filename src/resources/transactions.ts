@@ -18,7 +18,7 @@ import {
   TransactionSchema,
   toTransactionListQuery,
 } from "../models/transaction.js";
-import { Resource, parseResponse } from "./_base.js";
+import { parseResponse, Resource } from "./_base.js";
 
 export class TransactionsResource extends Resource {
   /** Fetch a single page of transactions. */
