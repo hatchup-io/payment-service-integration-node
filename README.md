@@ -1,8 +1,8 @@
-# @hatchup-io/payment-service-integration
+# payment-service-integration-node
 
-> **Status:** 0.1.0, unpublished. The client and all REST resources are implemented (M1.b.2); webhook parsing and dispatch (M1.c) are still pending.
+> **Status:** 0.1.0, unpublished. The client and all REST resources are implemented (M1.b.2); webhook parsing and dispatch (M1.c) are still pending. No Hatchup service uses it yet.
 
-TypeScript SDK for the [Hatchup Payment Service](https://github.com/hatchup-io/hatchup-payment-system) — an internal Stripe Connect gateway. Functional + protocol parity with the Python SDK at [`hatchup-payment-service-integration`](https://pypi.org/project/hatchup-payment-service-integration/) on PyPI.
+`@hatchup-io/payment-service-integration` is the TypeScript SDK for the [Hatchup Payment Service](https://github.com/hatchup-io/hatchup-payment-system), the internal Stripe Connect gateway. It aims at functional and protocol parity with the Python SDK, [`hatchup-payment-service-integration`](https://pypi.org/project/hatchup-payment-service-integration/) on PyPI. It is for Node back ends of Hatchup products that need to take payments. The gateway it calls runs on the production swarm in the `payment_service` stack at `https://api.payment.service.hatchup.capital`.
 
 ## What this is
 
@@ -31,7 +31,7 @@ Installing straight from the git URL does not work yet: `dist/` is not committed
 
 Requires Node 20+.
 
-## Usage
+## Use
 
 ```ts
 import { PaymentServiceClient, configFromEnv } from "@hatchup-io/payment-service-integration";
@@ -46,7 +46,7 @@ for await (const tx of client.transactions.iterAll({ status: "succeeded" })) {
 const result = await client.verify("ord_2026_05_001", "9.99");
 ```
 
-API keys must start with `hp_`. The default base URL is `https://payments.hatchup.io/api/v1/`; override it with `baseUrl` or `PSIP_BASE_URL`. There is no module-level singleton, so multi-tenant consumers can build one client per API key.
+API keys must start with `hp_`. The built-in default base URL is `https://payments.hatchup.io/api/v1/`, which is not the deployed gateway; set `baseUrl` or `PSIP_BASE_URL` to `https://api.payment.service.hatchup.capital/api/v1/`, as the Python consumers do. There is no module-level singleton, so multi-tenant consumers can build one client per API key.
 
 ## Status
 
@@ -78,7 +78,9 @@ Implemented on `PaymentServiceClient`:
 
 Not implemented yet (M1.c): `client.invoices`, and webhook parsing and dispatch (`parsePaymentCompleted`, `verifyEvent`, `WebhookDispatcher`). The webhook exception classes (`PSIPWebhookForgeryError`, `PSIPWebhookValidationError`) are already exported.
 
-## Development
+## Test
+
+Use Node 20 or later (`.nvmrc` pins 20) and pnpm.
 
 ```bash
 pnpm install
@@ -86,6 +88,18 @@ pnpm run check    # biome + tsc --noEmit
 pnpm run test     # vitest
 pnpm run build    # tsup → ESM + CJS + .d.ts
 ```
+
+CI (`.github/workflows/ci.yml`) runs on the self-hosted runners for every push to `main` and every pull request against `main`, on Node 20 and 22. It runs `pnpm install --frozen-lockfile`, `pnpm run check`, `pnpm run test` and `pnpm run build`, then checks that `dist/` holds the ESM and CJS entry points and their type files.
+
+## Release
+
+There is no release workflow yet, and the package is not on npm. `package.json` sets `publishConfig` to public access with provenance, and its `prepublishOnly` script runs `check`, `test` and `build` before a publish. The release pipeline is milestone M3 in the table above.
+
+## Related repositories
+
+- [hatchup-payment-system](https://github.com/hatchup-io/hatchup-payment-system): the gateway this SDK calls.
+- [payment-service-integration](https://github.com/hatchup-io/payment-service-integration): the Python SDK it ports, and the home of the Node SDK plan.
+- [production](https://github.com/hatchup-io/production): deploys the `payment_service` stack.
 
 ## License
 
